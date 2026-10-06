@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://rafa-minana.github.io/sitemap.xml

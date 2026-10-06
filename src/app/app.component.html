@@ -1,0 +1,629 @@
+<a class="skip-link" href="#home">Saltar al contenido</a>
+
+@if (booting) {
+  <div class="splash" aria-label="Cargando portfolio" role="status">
+    <div class="splash-top">
+      <span class="window-dots"><i></i><i></i><i></i></span
+      ><span>// iniciando espacio de trabajo...</span>
+    </div>
+    <div class="splash-orbit">
+      <span>RAFAEL&nbsp; MIÑANA</span><i></i><i></i><i></i>
+    </div>
+    <div class="splash-progress">
+      <span>◈ Cargando portfolio…</span>
+      <div><i></i></div>
+      <small>TS &nbsp; Angular</small>
+    </div>
+  </div>
+}
+
+<div class="desktop" [class.zen]="zen">
+  <header class="titlebar ide-chrome">
+    <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <nav class="window-menu" aria-label="Menú de ventana">
+      @for (item of ["File", "Control", "View"]; track item) {
+        <div class="menu-wrap">
+          <button
+            type="button"
+            class="menu-button"
+            [attr.aria-expanded]="menu === item"
+            (click)="toggleMenu(item)"
+          >
+            {{ item }}
+          </button>
+          @if (menu === item) {
+            <div class="dropdown" role="menu">
+              @if (item === "File") {
+                <button role="menuitem" (click)="menuAction('home')">
+                  Abrir home.ts <kbd>⌘ 1</kbd>
+                </button>
+                <button role="menuitem" (click)="menuAction('my-work')">
+                  Abrir work.ts
+                </button>
+                <button role="menuitem" (click)="menuAction('contact')">
+                  Abrir contact.css
+                </button>
+              }
+              @if (item === "Control") {
+                <button role="menuitem" (click)="menuAction('sidebar')">
+                  {{ sidebarOpen ? "Ocultar" : "Mostrar" }} explorador
+                </button>
+                <button role="menuitem" (click)="menuAction('assistant')">
+                  Abrir Portfolio Copilot
+                </button>
+                <button role="menuitem" (click)="menuAction('zen')">
+                  {{ zen ? "Salir de" : "Activar" }} Zen Mode
+                </button>
+              }
+              @if (item === "View") {
+                <button role="menuitem" (click)="menuAction('what-i-do')">
+                  Qué hago
+                </button>
+                <button role="menuitem" (click)="menuAction('career')">
+                  Trayectoria
+                </button>
+                <button role="menuitem" (click)="menuAction('skills')">
+                  Tecnologías
+                </button>
+                <button role="menuitem" (click)="menuAction('education')">
+                  Formación
+                </button>
+              }
+            </div>
+          }
+        </div>
+      }
+      <button
+        type="button"
+        class="menu-button"
+        (click)="terminalOpen = !terminalOpen"
+        [attr.aria-pressed]="terminalOpen"
+        title="Abrir terminal (⌘`)"
+      >
+        Terminal
+      </button>
+      <button
+        type="button"
+        class="menu-button"
+        (click)="assistantOpen = !assistantOpen"
+        [attr.aria-pressed]="assistantOpen"
+        title="Abrir Portfolio Copilot"
+      >
+        Help
+      </button>
+      <div class="menu-wrap">
+        <button
+          type="button"
+          class="menu-button"
+          [attr.aria-expanded]="menu === 'Theme'"
+          (click)="toggleMenu('Theme')"
+        >
+          Theme
+        </button>
+        @if (menu === "Theme") {
+          <div class="dropdown" role="menu">
+            <button
+              role="menuitemradio"
+              [attr.aria-checked]="theme === 'dark'"
+              (click)="setTheme('dark')"
+            >
+              {{ theme === "dark" ? "✓" : "" }} Dark
+            </button>
+            <button
+              role="menuitemradio"
+              [attr.aria-checked]="theme === 'light'"
+              (click)="setTheme('light')"
+            >
+              {{ theme === "light" ? "✓" : "" }} Light
+            </button>
+          </div>
+        }
+      </div>
+    </nav>
+    <button
+      type="button"
+      class="zen-button"
+      [attr.aria-pressed]="zen"
+      (click)="toggleZen()"
+    >
+      {{ zen ? "Exit Zen" : "Zen Mode" }}
+    </button>
+    <span class="titlebar-spacer"></span>
+    <span class="availability"
+      ><span class="online-dot"></span> Disponible para oportunidades</span
+    >
+    <a class="toolbar-link" [href]="'mailto:' + data.email">EMAIL</a>
+    <button type="button" class="toolbar-link" (click)="navigate('career')">
+      CV
+    </button>
+  </header>
+
+  <div class="workspace">
+    <nav class="activitybar ide-chrome" aria-label="Perfiles y asistente">
+      <a
+        [href]="data.github"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub"
+        ><img [src]="icon('github')" alt=""
+      /></a>
+      <a
+        [href]="data.linkedin"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn"
+        ><img [src]="icon('linkedin')" alt=""
+      /></a>
+      <a
+        href="https://www.npmjs.com/package/ts-useful-types"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="npm"
+        ><img [src]="icon('package')" alt=""
+      /></a>
+      <a
+        href="https://vepinmobiliaria.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Vep Inmobiliaria"
+        ><img [src]="icon('building-2')" alt=""
+      /></a>
+      <a
+        href="https://github.com/rafa-minana/leetCodeProblems"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LeetCode Problems"
+        ><img [src]="icon('code-xml')" alt=""
+      /></a>
+      <a [href]="'mailto:' + data.email" aria-label="Email"
+        ><img [src]="icon('mail')" alt=""
+      /></a>
+      <a [href]="data.phoneHref" aria-label="Teléfono"
+        ><img [src]="icon('phone')" alt=""
+      /></a>
+      <button type="button" (click)="navigate('career')" aria-label="Ver CV">
+        <img [src]="icon('file-user')" alt="" />
+      </button>
+      <button
+        type="button"
+        (click)="assistantOpen = !assistantOpen"
+        aria-label="Abrir Portfolio Copilot"
+        [attr.aria-expanded]="assistantOpen"
+      >
+        <img [src]="icon('sparkles')" alt="" />
+      </button>
+      <button
+        type="button"
+        class="activity-bottom"
+        (click)="setTheme(theme === 'dark' ? 'light' : 'dark')"
+        aria-label="Cambiar tema"
+      >
+        <img [src]="icon('settings')" alt="" />
+      </button>
+    </nav>
+
+    @if (sidebarOpen && !zen) {
+      <aside
+        class="explorer ide-chrome"
+        aria-label="Archivos del portfolio"
+      >
+        <div class="explorer-title">PORTFOLIO <span>···</span></div>
+        <nav class="file-list" aria-label="Secciones">
+          @for (section of data.sections; track section.id) {
+            <a
+              [href]="'#' + section.id"
+              class="file-link"
+              [class.active]="activeSection === section.id"
+              [attr.aria-current]="activeSection === section.id ? 'page' : null"
+              (click)="$event.preventDefault(); navigate(section.id)"
+            >
+              <img [src]="icon(section.icon)" alt="" /><span>{{
+                section.file
+              }}</span>
+            </a>
+          }
+        </nav>
+        <div class="explorer-bottom">
+          <button
+            type="button"
+            class="accordion-label"
+            [attr.aria-expanded]="outlineOpen"
+            (click)="outlineOpen = !outlineOpen"
+          >
+            › OUTLINE
+          </button>
+          @if (outlineOpen) {
+            <div class="accordion-content">
+              @for (section of data.sections; track section.id) {
+                <button type="button" (click)="navigate(section.id)">
+                  {{ section.label }}
+                </button>
+              }
+            </div>
+          }
+          <button
+            type="button"
+            class="accordion-label"
+            [attr.aria-expanded]="timelineOpen"
+            (click)="timelineOpen = !timelineOpen"
+          >
+            › TIMELINE
+          </button>
+          @if (timelineOpen) {
+            <div class="accordion-content">
+              <button type="button" (click)="navigate('career')">
+                2019 → Actualidad
+              </button>
+            </div>
+          }
+        </div>
+      </aside>
+    }
+
+    <div class="editor-column">
+      <div class="breadcrumbs ide-chrome">
+        <span class="crumb-brand">cotabyte</span><span>/</span><span>src</span
+        ><span>/</span><strong>{{ currentFile() }}</strong>
+      </div>
+      <main #editor class="editor" id="main" (scroll)="onEditorScroll()">
+        <section id="home" class="hero-section">
+          <div class="hero-content">
+            <div class="hero-copy">
+              <div class="code-intro">
+                <span class="eyebrow">CURRENT FOCUS</span>
+                <div>
+                  <span class="syntax-keyword">const</span>&nbsp;<span
+                    class="syntax-variable"
+                    >role</span
+                  >&nbsp;<span class="syntax-operator">=</span>&nbsp;<span
+                    class="syntax-string"
+                    >"Frontend Engineer"</span
+                  ><span class="syntax-operator">;</span
+                  ><span class="caret">▍</span>
+                </div>
+              </div>
+              <h1>{{ data.name }}</h1>
+              <p class="hero-summary">
+                Ingeniero de software con <em>más de 7 años en el sector</em> y
+                más de 4 especializado en frontend con
+                <em>Angular, RxJS y signals.</em> Mi trayectoria en backend y
+                fullstack me da una visión completa del ciclo de desarrollo.
+                Actualmente impulso la <em>arquitectura frontend</em>, los
+                procesos de entrega y la automatización de
+                <em>testing con IA</em>: he reducido el testing manual en más de
+                un 70 % y los tiempos de build en más de un 50 %. Trabajo junto
+                a QA, Producto, backend y diseño para que cada entrega sea
+                verificable y reutilizable.
+              </p>
+            </div>
+            <img
+              class="hero-photo"
+              src="assets/rafael-cutout.png"
+              alt="Retrato de Rafael Miñana Jover"
+              width="1128"
+              height="1394"
+              fetchpriority="high"
+            />
+          </div>
+          <div class="hero-highlights" aria-label="Logros destacados">
+            @for (highlight of data.highlights; track highlight.label) {
+              <span
+                ><b>{{ highlight.value }}</b> {{ highlight.label }}</span
+              >
+            }
+          </div>
+        </section>
+
+        <section
+          id="what-i-do"
+          class="content-section focus-section"
+          aria-labelledby="focus-title"
+        >
+          <div class="section-kicker">
+            [ ~ ] &nbsp; Mi forma de construir producto
+          </div>
+          <h2 id="focus-title">Qué <span>hago</span></h2>
+          <p class="section-subtitle">
+            Tres maneras de ayudar a un equipo a construir y entregar mejor
+          </p>
+          <div class="focus-grid">
+            @for (focus of data.focus; track focus.number) {
+              <article class="focus-card">
+                <div class="focus-top">
+                  <span>{{ focus.number }}</span
+                  ><code>{{ focus.file }}</code>
+                </div>
+                <h3>{{ focus.title }}</h3>
+                <p class="focus-strapline">{{ focus.strapline }}</p>
+                <p>{{ focus.summary }}</p>
+                <p class="focus-detail">{{ focus.detail }}</p>
+                <div class="focus-tools-title">TOOLS &amp; FOCUS</div>
+                <div class="chips">
+                  @for (tool of focus.tools; track tool) {
+                    <span>{{ tool }}</span>
+                  }
+                </div>
+              </article>
+            }
+          </div>
+        </section>
+
+        <section
+          id="career"
+          class="content-section career-section"
+          aria-labelledby="career-title"
+        >
+          <div class="section-kicker">
+            [ * ] &nbsp; Roles, equipos y resultados
+          </div>
+          <h2 id="career-title">Mi trayectoria y <span>experiencia</span></h2>
+          <div class="career-timeline">
+            @for (
+              job of data.experience;
+              track job.company;
+              let index = $index
+            ) {
+              <article class="timeline-item">
+                <div class="timeline-node">
+                  {{
+                    index === 0 ? "NOW" : index === 1 ? "2022–24" : "2019–22"
+                  }}
+                </div>
+                <div class="timeline-text">
+                  <h3>{{ job.role }}</h3>
+                  <strong>{{ job.company }}</strong>
+                  <p>{{ job.brief }}</p>
+                </div>
+              </article>
+            }
+          </div>
+          <div class="experience-list">
+            @for (job of data.experience; track job.company) {
+              <article class="experience-card">
+                <div class="experience-header">
+                  <div>
+                    <h3>{{ job.company }}</h3>
+                    <p>{{ job.role }}</p>
+                  </div>
+                  <span>{{ job.period }}</span>
+                </div>
+                <ul>
+                  @for (detail of job.details; track detail) {
+                    <li>{{ detail }}</li>
+                  }
+                </ul>
+              </article>
+            }
+          </div>
+        </section>
+
+        <section
+          id="my-work"
+          class="content-section work-section"
+          aria-labelledby="work-title"
+        >
+          <div class="section-kicker">
+            [ / ] &nbsp; Proyectos que merecen los píxeles
+          </div>
+          <h2 id="work-title">Mis <span>proyectos</span></h2>
+          <div class="work-grid">
+            @for (project of data.projects; track project.number) {
+              <article class="work-card">
+                <div class="work-heading">
+                  <b>{{ project.number }}</b>
+                  <div>
+                    <h3>{{ project.name }}</h3>
+                    <p>{{ project.category }}</p>
+                  </div>
+                </div>
+                <div class="work-preview" [attr.aria-label]="project.name">
+                  <span>{{ project.mark }}</span>
+                </div>
+                <p class="work-tools-heading">TOOLS AND FEATURES</p>
+                <p class="work-stack">{{ project.stack }}</p>
+                <p class="work-description">{{ project.description }}</p>
+                <div class="work-links">
+                  @for (link of project.links; track link.url) {
+                    <a
+                      [href]="link.url"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >{{ link.label }} ↗</a
+                    >
+                  }
+                </div>
+              </article>
+            }
+          </div>
+        </section>
+
+        <section
+          id="skills"
+          class="content-section skills-section"
+          aria-labelledby="skills-title"
+        >
+          <div class="section-kicker">[ : ] &nbsp; Stack y herramientas</div>
+          <h2 id="skills-title">Tecnologías y <span>experiencia</span></h2>
+          <div class="skills-grid">
+            @for (group of data.skills; track group.group) {
+              <div class="skill-group">
+                <h3>{{ group.group }}</h3>
+                <div class="chips">
+                  @for (skill of group.items; track skill) {
+                    <span>{{ skill }}</span>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </section>
+
+        <section
+          id="education"
+          class="content-section education-section"
+          aria-labelledby="education-title"
+        >
+          <div class="section-kicker">[ + ] &nbsp; Formación e idiomas</div>
+          <h2 id="education-title">Formación e <span>idiomas</span></h2>
+          <div class="education-grid">
+            <article class="education-card">
+              <span>2019 — 2023</span>
+              <h3>{{ data.education.degree }}</h3>
+              <p>{{ data.education.institution }}</p>
+            </article>
+            <article class="education-card">
+              <span>LANGUAGES</span>
+              <div class="languages">
+                @for (language of data.languages; track language.name) {
+                  <p>
+                    {{ language.name }} <small>/ {{ language.level }}</small>
+                  </p>
+                }
+              </div>
+            </article>
+          </div>
+          <p class="linux-note">
+            <span class="syntax-comment">//</span> {{ data.interests }}
+          </p>
+        </section>
+
+        <section
+          id="contact"
+          class="content-section contact-section"
+          aria-labelledby="contact-title"
+        >
+          <div class="section-kicker">
+            [ &#64; ] &nbsp; Disponibilidad y enlaces
+          </div>
+          <h2 id="contact-title">Contacto<span>.</span></h2>
+          <p>
+            ¿Hablamos de frontend, arquitectura o automatización? Estoy en
+            Valencia, España.
+          </p>
+          <div class="contact-grid">
+            <div>
+              <span>LOCATION</span><strong>{{ data.location }}</strong>
+            </div>
+            <div>
+              <span>PHONE</span><a [href]="data.phoneHref">{{ data.phone }}</a>
+            </div>
+            <div>
+              <span>EMAIL</span
+              ><a [href]="'mailto:' + data.email">{{ data.email }}</a>
+            </div>
+          </div>
+          <div class="contact-links">
+            <a [href]="data.linkedin" target="_blank" rel="noopener noreferrer"
+              >LinkedIn ↗</a
+            ><a [href]="data.github" target="_blank" rel="noopener noreferrer"
+              >GitHub ↗</a
+            ><a [href]="'mailto:' + data.email">Enviar email ↗</a>
+          </div>
+        </section>
+      </main>
+
+      @if (terminalOpen) {
+        <section
+          class="terminal-panel ide-chrome"
+          aria-label="Terminal interactiva"
+        >
+          <div class="panel-heading">
+            <span
+              >PROBLEMS &nbsp; OUTPUT &nbsp; DEBUG CONSOLE &nbsp;
+              <b>TERMINAL</b></span
+            ><button
+              type="button"
+              (click)="terminalOpen = false"
+              aria-label="Cerrar terminal"
+            >
+              ×
+            </button>
+          </div>
+          <div class="terminal-output" aria-live="polite">
+            @for (line of terminalHistory; track $index) {
+              <p [class.terminal-input]="line.kind === 'input'">
+                {{ line.text }}
+              </p>
+            }
+          </div>
+          <form (submit)="$event.preventDefault(); runCommand()">
+            <label for="terminal-command">rafael&#64;portfolio:~$</label
+            ><input
+              id="terminal-command"
+              autocomplete="off"
+              [value]="command"
+              (input)="command = $any($event.target).value"
+              aria-label="Comando de terminal"
+            />
+          </form>
+        </section>
+      }
+    </div>
+
+    @if (assistantOpen) {
+      <aside class="copilot-panel ide-chrome" aria-label="Portfolio Copilot">
+        <div class="panel-heading">
+          <span>✦ &nbsp; PORTFOLIO COPILOT</span
+          ><button
+            type="button"
+            (click)="assistantOpen = false"
+            aria-label="Cerrar asistente"
+          >
+            ×
+          </button>
+        </div>
+        <div class="copilot-body">
+          <h3>Hola, soy el asistente del portfolio.</h3>
+          <p>Encuentra información sobre Rafael sin salir del editor.</p>
+          <div class="suggestions">
+            @for (
+              question of [
+                "¿Qué experiencia tiene?",
+                "¿Qué tecnologías usa?",
+                "¿Qué proyectos ha hecho?",
+                "¿Cómo puedo contactar?",
+              ];
+              track question
+            ) {
+              <button type="button" (click)="askAssistant(question)">
+                {{ question }} ↗
+              </button>
+            }
+          </div>
+          <div class="assistant-response" aria-live="polite">
+            {{ assistantAnswer }}
+          </div>
+        </div>
+        <form (submit)="$event.preventDefault(); askAssistant()">
+          <input
+            [value]="assistantQuestion"
+            (input)="assistantQuestion = $any($event.target).value"
+            aria-label="Pregunta al asistente"
+            placeholder="Pregunta sobre mi perfil..."
+          /><button type="submit" aria-label="Enviar pregunta">↑</button>
+        </form>
+      </aside>
+    }
+  </div>
+
+  <footer class="statusbar ide-chrome">
+    <div>
+      <span class="status-remote">⌁</span><span>⑂ &nbsp;main*</span
+      ><span>↻</span><span>portfolio</span><span>⊗ 0 &nbsp; ⚠ 0</span>
+    </div>
+    <span>UTF-8 &nbsp;·&nbsp; TypeScript Angular</span>
+  </footer>
+  <nav class="mobile-bottom-nav ide-chrome" aria-label="Secciones de la página">
+    @for (section of data.sections; track section.id) {
+      @if (section.id !== "home") {
+        <a
+          [href]="'#' + section.id"
+          [class.active]="activeSection === section.id"
+          [attr.aria-current]="activeSection === section.id ? 'page' : null"
+          (click)="$event.preventDefault(); navigate(section.id)"
+          >{{ section.label }}</a
+        >
+      }
+    }
+  </nav>
+</div>
