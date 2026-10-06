@@ -73,6 +73,17 @@ export const portfolio = {
   focus: [
     {
       number: "01",
+      file: "release.flow.ts",
+      title: "Git, versionado y releases",
+      strapline: "Un flujo de entrega predecible",
+      summary:
+        "Definí el flujo de trabajo Git y la estrategia de versionado (SemVer) del nuevo producto, coordinando con Producto plazos y entregas.",
+      detail:
+        "Automaticé la creación de tags y releases en GitHub, aumentando la productividad del equipo en torno a un 60 %.",
+      tools: ["Git", "SemVer", "GitHub Actions", "Releases", "CI/CD"],
+    },
+    {
+      number: "02",
       file: "frontend.ts",
       title: "Arquitectura frontend",
       strapline: "Aplicaciones Angular que escalan",
@@ -83,7 +94,7 @@ export const portfolio = {
       tools: ["Angular", "TypeScript", "RxJS", "signals", "Ionic", "npm"],
     },
     {
-      number: "02",
+      number: "03",
       file: "quality.ai.ts",
       title: "Testing e IA",
       strapline: "Calidad integrada en cada entrega",
@@ -100,15 +111,15 @@ export const portfolio = {
       ],
     },
     {
-      number: "03",
-      file: "delivery.ts",
-      title: "Entrega y liderazgo",
-      strapline: "Del código a la release",
+      number: "04",
+      file: "leadership.ts",
+      title: "Liderazgo de equipo",
+      strapline: "Coordinación de punta a punta",
       summary:
         "Coordino arquitectura, planificación y procesos de entrega con Producto, QA, diseño y backend.",
       detail:
-        "Fui Squad Lead durante seis meses. Definí Git, SemVer y releases automatizadas para un producto nuevo, aumentando la productividad del equipo en torno a un 60 %.",
-      tools: ["Git", "SemVer", "CI/CD", "Jira", "Docker"],
+        "Fui Squad Lead durante seis meses de un equipo responsable de un módulo del producto; cumplimos la mayor parte de los objetivos de entrega previstos.",
+      tools: ["Squad Lead", "Planificación", "Jira", "Docker"],
     },
   ] satisfies FocusArea[],
   experience: [

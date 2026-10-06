@@ -6,14 +6,33 @@ import {
   OnDestroy,
   ViewChild,
 } from "@angular/core";
+import { CursorComponent } from "./cursor.component";
 import { portfolio } from "./portfolio.data";
 
 type Theme = "dark" | "light";
 type TerminalLine = { kind: "input" | "output"; text: string };
 
+const REVEAL_SELECTOR = [
+  ".hero-copy > *",
+  ".hero-photo",
+  ".hero-highlights",
+  ".content-section > .section-kicker",
+  ".content-section > h2",
+  ".content-section > p",
+  ".focus-card",
+  ".timeline-item",
+  ".experience-card",
+  ".work-card",
+  ".skill-group",
+  ".education-card",
+  ".contact-grid > div",
+  ".contact-links",
+].join(", ");
+
 @Component({
   selector: "app-root",
   standalone: true,
+  imports: [CursorComponent],
   templateUrl: "./app.component.html",
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
@@ -41,6 +60,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     },
   ];
   private bootTimer?: ReturnType<typeof setTimeout>;
+  private revealObserver?: IntersectionObserver;
 
   constructor() {
     if (typeof window !== "undefined") {
@@ -61,11 +81,55 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    this.setupReveal();
     setTimeout(() => this.scrollToHash(), this.booting ? 1400 : 0);
   }
 
   ngOnDestroy(): void {
     if (this.bootTimer) clearTimeout(this.bootTimer);
+    this.revealObserver?.disconnect();
+  }
+
+  // Hides editor blocks and fades them in as they scroll into view; siblings stagger.
+  private setupReveal(): void {
+    const editor = this.editor?.nativeElement;
+    if (!editor || this.reducedMotion() || !("IntersectionObserver" in window))
+      return;
+    const targets = Array.from(
+      editor.querySelectorAll<HTMLElement>(REVEAL_SELECTOR),
+    );
+    for (const element of targets) {
+      const siblings = Array.from(element.parentElement?.children ?? []).filter(
+        (sibling) => sibling.matches(REVEAL_SELECTOR),
+      );
+      const index = Math.min(Math.max(siblings.indexOf(element), 0), 6);
+      element.style.setProperty("--reveal-index", String(index));
+      element.classList.add("reveal");
+    }
+    this.revealObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const element = entry.target as HTMLElement;
+          this.revealObserver?.unobserve(element);
+          element.classList.add("revealed");
+          // Drop the reveal styles afterwards so hover transitions get no delay.
+          const finish = (event: TransitionEvent) => {
+            if (event.target !== element || event.propertyName !== "translate")
+              return;
+            element.removeEventListener("transitionend", finish);
+            element.classList.remove("reveal", "revealed");
+            element.style.removeProperty("--reveal-index");
+          };
+          element.addEventListener("transitionend", finish);
+        }
+      },
+      { root: editor, rootMargin: "0px 0px -8% 0px", threshold: 0 },
+    );
+    setTimeout(
+      () => targets.forEach((element) => this.revealObserver?.observe(element)),
+      this.booting ? 1300 : 0,
+    );
   }
 
   @HostListener("window:hashchange") onHashChange(): void {

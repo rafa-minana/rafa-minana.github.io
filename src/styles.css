@@ -538,7 +538,7 @@ kbd {
 }
 .focus-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
 .focus-card {
@@ -1250,10 +1250,6 @@ kbd {
 .editor .content-section {
   scroll-margin-top: 128px;
 }
-.work-section > .section-kicker,
-.work-section > h2 {
-  margin-left: -76px;
-}
 .work-section > h2 span {
   background: linear-gradient(100deg, #3794ff 60%, #43b5b4);
   background-clip: text;
@@ -1533,6 +1529,90 @@ kbd {
     width: min(100%, 340px);
   }
 }
+/* Scroll reveal for editor content; classes are added from AppComponent. */
+.reveal {
+  transition:
+    opacity 0.6s ease,
+    filter 0.6s ease,
+    clip-path 0.9s cubic-bezier(0.65, 0, 0.35, 1),
+    scale 0.9s cubic-bezier(0.2, 0.75, 0.25, 1),
+    translate 0.75s cubic-bezier(0.2, 0.75, 0.25, 1);
+  transition-delay: calc(var(--reveal-index, 0) * 90ms);
+}
+.reveal:not(.revealed) {
+  translate: 0 28px;
+}
+.reveal:not(.revealed):not(.hero-photo) {
+  opacity: 0;
+  filter: blur(6px);
+}
+:where(.timeline-item).reveal:not(.revealed) {
+  translate: -28px 0;
+}
+:where(.content-section > h2, .section-kicker).reveal:not(.revealed) {
+  translate: -18px 0;
+}
+/* The photo keeps its own opacity/filter per breakpoint, so it wipes in instead. */
+.hero-photo.reveal {
+  transition-duration: 0.6s, 0.6s, 0.9s, 0.9s, 0.9s;
+  transition-delay: 0.2s;
+}
+.hero-photo.reveal:not(.revealed) {
+  translate: 0 18px;
+  scale: 0.96;
+  clip-path: inset(100% 0 0 0);
+}
+/* Custom cursor; CursorComponent adds .custom-cursor only for fine pointers. */
+.cursor-ring,
+.cursor-dot {
+  display: none;
+}
+html.custom-cursor,
+html.custom-cursor * {
+  cursor: none !important;
+}
+html.custom-cursor .cursor-ring,
+html.custom-cursor .cursor-dot {
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  border-radius: 50%;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.cursor-ring {
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  border: 2px solid color-mix(in srgb, var(--brand) 50%, transparent);
+  background: color-mix(in srgb, var(--brand) 5%, transparent);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+.cursor-ring.active {
+  border-color: color-mix(in srgb, var(--brand) 95%, transparent);
+  box-shadow:
+    0 12px 44px color-mix(in srgb, var(--brand) 25%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--brand) 35%, transparent),
+    inset 0 1px 0 rgb(255 255 255 / 0.12);
+}
+.cursor-lens {
+  position: absolute;
+  inset: 13%;
+  border-radius: 50%;
+  opacity: var(--cursor-lens, 0);
+  backdrop-filter: brightness(1.2) saturate(1.08) contrast(1.05);
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--brand);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.18);
+}
 @media (prefers-reduced-motion: reduce) {
   *,
   *:before,
@@ -1666,10 +1746,6 @@ kbd {
   }
   .editor .content-section {
     scroll-margin-top: 102px;
-  }
-  .work-section > .section-kicker,
-  .work-section > h2 {
-    margin-left: -76px;
   }
   .work-section > h2 {
     font-size: 44px;

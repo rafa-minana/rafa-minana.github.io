@@ -203,10 +203,7 @@
     </nav>
 
     @if (sidebarOpen && !zen) {
-      <aside
-        class="explorer ide-chrome"
-        aria-label="Archivos del portfolio"
-      >
+      <aside class="explorer ide-chrome" aria-label="Archivos del portfolio">
         <div class="explorer-title">PORTFOLIO <span>···</span></div>
         <nav class="file-list" aria-label="Secciones">
           @for (section of data.sections; track section.id) {
@@ -277,14 +274,14 @@
                     >role</span
                   >&nbsp;<span class="syntax-operator">=</span>&nbsp;<span
                     class="syntax-string"
-                    >"Frontend Engineer"</span
+                    >"Software Engineer"</span
                   ><span class="syntax-operator">;</span
                   ><span class="caret">▍</span>
                 </div>
               </div>
               <h1>{{ data.name }}</h1>
               <p class="hero-summary">
-                Ingeniero de software con <em>más de 7 años en el sector</em> y
+                Ingeniero de software con <em>más de 6 años en el sector</em> y
                 más de 4 especializado en frontend con
                 <em>Angular, RxJS y signals.</em> Mi trayectoria en backend y
                 fullstack me da una visión completa del ciclo de desarrollo.
@@ -324,7 +321,7 @@
           </div>
           <h2 id="focus-title">Qué <span>hago</span></h2>
           <p class="section-subtitle">
-            Tres maneras de ayudar a un equipo a construir y entregar mejor
+            Cuatro maneras de ayudar a un equipo a construir y entregar mejor
           </p>
           <div class="focus-grid">
             @for (focus of data.focus; track focus.number) {
@@ -627,3 +624,4 @@
     }
   </nav>
 </div>
+<app-cursor />
