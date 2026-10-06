@@ -40,7 +40,7 @@ export const portfolio = {
   linkedin: "https://www.linkedin.com/in/rminana/",
   github: "https://github.com/rafa-minana",
   summary:
-    "Ingeniero de software con más de 7 años en el sector y más de 4 especializado en frontend con Angular, RxJS y signals. Mi trayectoria en backend y fullstack me da una visión completa del ciclo de desarrollo. Actualmente impulso la arquitectura frontend y los procesos de entrega, y cuando el equipo tiene una necesidad, busco cómo resolverla.",
+    "Ingeniero de software con más de 4 años en el sector y más de 3 especializado en frontend con Angular, RxJS y signals. Mi trayectoria en backend y fullstack me da una visión completa del ciclo de desarrollo. Actualmente impulso la arquitectura frontend y los procesos de entrega, y cuando el equipo tiene una necesidad, busco cómo resolverla.",
   sections: [
     { id: "home", file: "home.ts", icon: "home", label: "Inicio" },
     {
