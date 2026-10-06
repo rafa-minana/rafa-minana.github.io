@@ -20,7 +20,6 @@
     "@angular/build": "22.2.1",
     "@angular/cli": "22.2.1",
     "@angular/compiler-cli": "22.2.1",
-    "lucide-static": "^0.468.0",
     "typescript": "~6.0.0"
   }
 }

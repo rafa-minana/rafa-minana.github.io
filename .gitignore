@@ -1,4 +1,29 @@
+# Dependencias
 /node_modules
+
+# Build y caché de Angular
 /dist
+/tmp
+/out-tsc
 /.angular
+/coverage
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+*.log
+
+# Entorno local
+.env
+.env.*
+
+# Editores
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+
+# Sistema
 .DS_Store
+Thumbs.db
