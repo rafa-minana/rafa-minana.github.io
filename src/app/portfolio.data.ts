@@ -40,7 +40,7 @@ export const portfolio = {
   linkedin: "https://www.linkedin.com/in/rminana/",
   github: "https://github.com/rafa-minana",
   summary:
-    "Ingeniero de software con más de 7 años en el sector y más de 4 especializado en frontend con Angular, RxJS y signals. Mi trayectoria en backend y fullstack me da una visión completa del ciclo de desarrollo. Actualmente impulso la arquitectura frontend, los procesos de entrega y la automatización de testing con IA.",
+    "Ingeniero de software con más de 7 años en el sector y más de 4 especializado en frontend con Angular, RxJS y signals. Mi trayectoria en backend y fullstack me da una visión completa del ciclo de desarrollo. Actualmente impulso la arquitectura frontend y los procesos de entrega, y cuando el equipo tiene una necesidad, busco cómo resolverla.",
   sections: [
     { id: "home", file: "home.ts", icon: "home", label: "Inicio" },
     {
@@ -77,9 +77,9 @@ export const portfolio = {
       title: "Git, versionado y releases",
       strapline: "Un flujo de entrega predecible",
       summary:
-        "Definí el flujo de trabajo Git y la estrategia de versionado (SemVer) del nuevo producto, coordinando con Producto plazos y entregas.",
+        "Definí el flujo de trabajo Git y la estrategia de versionado (SemVer) del nuevo producto, coordinando y adaptándolo a las necesidades de Producto.",
       detail:
-        "Automaticé la creación de tags y releases en GitHub, aumentando la productividad del equipo en torno a un 60 %.",
+        "Automaticé la creación de tags y releases en GitHub, aumentando la productividad del equipo en torno a un 60%.",
       tools: ["Git", "SemVer", "GitHub Actions", "Releases", "CI/CD"],
     },
     {
@@ -95,13 +95,13 @@ export const portfolio = {
     },
     {
       number: "03",
-      file: "quality.ai.ts",
-      title: "Testing e IA",
-      strapline: "Calidad integrada en cada entrega",
+      file: "automation.ts",
+      title: "Iniciativa propia",
+      strapline: "Detectar una necesidad y resolverla",
       summary:
-        "Convierto casos escritos por QA en ejecuciones E2E automatizadas sobre el producto real.",
+        "Cuando el equipo necesita algo que no existe, lo propongo y lo construyo. El testing manual estaba frenando las entregas, así que busqué la forma de automatizarlo.",
       detail:
-        "Creé un framework con Playwright, Stagehand y agentes LLM integrado en GitHub Actions. La suite smoke corre en cada PR y redujo el testing manual más de un 70 %.",
+        "Monté un framework E2E con Playwright, Stagehand y agentes LLM, integrado en GitHub Actions, para que QA pudiera automatizar sus casos. Hoy corre en cada PR y redujo el testing manual más de un 70 %.",
       tools: [
         "Playwright",
         "Stagehand",
@@ -131,7 +131,7 @@ export const portfolio = {
         "Arquitectura Angular, automatización de QA con IA y entregas más rápidas para un producto SaaS.",
       details: [
         "Diseñé un framework E2E con TypeScript, Playwright y Stagehand: QA escribe casos en lenguaje natural y un agente LLM los ejecuta sobre el SaaS. Lo integré en GitHub Actions con smoke tests en cada PR y reportes estilo Allure; redujo el testing manual más de un 70 %.",
-        "Fui Squad Lead durante seis meses de un equipo responsable de un módulo del producto; cumplimos la mayor parte de los objetivos de entrega previstos.",
+        "Abordé el rol de Squad Lead de un equipo responsable de un módulo del producto; cumplimos la mayor parte de los objetivos de entrega previstos.",
         "Definí el flujo Git y la estrategia SemVer del nuevo producto con Producto. Automaticé tags y releases en GitHub, aumentando la productividad en torno a un 60 %.",
         "Participé en la división de la aplicación Angular en cinco librerías npm internas, con builds más de un 50 % más rápidos y código reutilizable.",
         "Desarrollo nuevas funcionalidades del SaaS con Angular 22, RxJS y signals junto a backend y diseño.",
